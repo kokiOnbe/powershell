@@ -1,5 +1,7 @@
 Add-Type -AssemblyName Microsoft.VisualBasic
 
+. "C:\Users\ns31896\Documents\txtbox.ps1"
+
 <#
 .SYNOPSIS
     時間が来たらメッセージ表示
@@ -30,7 +32,7 @@ Add-Type -AssemblyName Microsoft.VisualBasic
     午後23時まで待つ（任意のメッセージ表示）
 #>
 
-function zzz([string]$time, [string]$msg = "")
+function zzz([string]$time, [string]$msg = "", [string]$boxtype = "txtbox")
 {
     Clear-Host
     #$flag = 0
@@ -145,17 +147,17 @@ function zzz([string]$time, [string]$msg = "")
         $msg = "`n`n　時間です　" + (Get-Date).ToString("HH:mm") + "n`n"
     }
 
+    
+    # onならtxtbox
+    if ($boxtype -eq "check"){
+        txtbox $msg
+    }
+    else
+    {
     # メッセージボックス表示
     [void][Microsoft.VisualBasic.Interaction]::MsgBox($msg,
         ([Microsoft.VisualBasic.MsgBoxStyle]::Yes -bor [Microsoft.VisualBasic.MsgBoxStyle]::SystemModal),"PowerShell")
-    
-#    # 15:00ならNAR印刷
-#    if ($time -eq "15:00"){
-#        powershell -ExecutionPolicy RemoteSigned -File nar.ps1
-#        $msg = "印刷完了"
-#        [void][Microsoft.VisualBasic.Interaction]::MsgBox($msg,
-#        ([Microsoft.VisualBasic.MsgBoxStyle]::Yes -bor [Microsoft.VisualBasic.MsgBoxStyle]::SystemModal),"PowerShell")
-#    }
+    }
 }
 
 
